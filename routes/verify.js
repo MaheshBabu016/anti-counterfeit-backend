@@ -5,8 +5,9 @@ const { contract } = require("../blockchain");
 router.post("/", async (req, res) => {
   try {
     const { qrPayload } = req.body;
+
     if (!qrPayload) {
-      return res.status(400).json({ error: "Missing qrPayload" });
+      return res.status(400).json({ error: "qrPayload missing" });
     }
 
     const productId = qrPayload.productId;
@@ -29,10 +30,7 @@ router.post("/", async (req, res) => {
 
   } catch (err) {
     console.error(err);
-    res.status(500).json({
-      error: "Verification error",
-      details: err.toString()
-    });
+    res.status(500).json({ error: "Verification error", details: err.toString() });
   }
 });
 
