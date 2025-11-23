@@ -2,9 +2,12 @@ const express = require("express");
 const router = express.Router();
 const { contract } = require("../blockchain");
 
-router.post("/verify", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const { qrPayload } = req.body;
+    if (!qrPayload) {
+      return res.status(400).json({ error: "Missing qrPayload" });
+    }
 
     const productId = qrPayload.productId;
     const details = await contract.products(productId);
@@ -26,7 +29,10 @@ router.post("/verify", async (req, res) => {
 
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Verification error", details: err.toString() });
+    res.status(500).json({
+      error: "Verification error",
+      details: err.toString()
+    });
   }
 });
 

@@ -7,15 +7,13 @@ const registerRoute = require("./routes/register");
 
 const app = express();
 
-// middlewares
 app.use(cors());
 app.use(bodyParser.json());
 
-// routes
+// Correct route mounting
 app.use("/verify", verifyRoute);
 app.use("/register", registerRoute);
 
-// server
 app.listen(4000, () => {
   console.log("Server running on http://localhost:4000");
 });
